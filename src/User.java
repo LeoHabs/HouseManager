@@ -1,3 +1,4 @@
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
@@ -95,7 +96,7 @@ public class User {
             if (monthly.equals("Y") || monthly.equals("YES")) {
                 while (true) {
                     try {
-                        System.out.print("How many months?🗓");
+                        System.out.print("How many months?🗓: ");
                         expense.setMonthsLeft(scanner.nextInt());
                         break;
                     } catch (Exception e) {
@@ -113,7 +114,7 @@ public class User {
                 System.out.print("Month🗓: ");
                 month = findMonth(scanner.next().toUpperCase());
             }
-            System.out.print("Day of the month :🗓");
+            System.out.print("Day of the month🗓: ");
             int day = scanner.nextInt() - 1;
             expense.setDay(day);
             month.getDays().get(day).addExpense(expense);
@@ -169,13 +170,15 @@ public class User {
 
     public void printMonthExpenses() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("What month?🗓");
-        Month month = findMonth(scanner.next());
+        System.out.println();
+        System.out.print("What month?🗓: ");
+        Month month = findMonth(scanner.next().toUpperCase());
+        System.out.println();
         for (int i = 0; i < month.getDays().size(); i++) {
             if (month.getDays().get(i).getExpensesOfDay().size() > 0) {
                 System.out.print(Color.CYAN_BOLD);
                 System.out.println("Day: " + (i + 1));
-                System.out.println(Color.RESET);
+                System.out.print(Color.RESET);
             }
             for (int j = 0; j < month.getDays().get(i).getExpensesOfDay().size(); j++) {
                 System.out.println(month.getDays().get(i).getExpensesOfDay().get(j).getNameOfExpense() + " : " + month.getDays().get(i).getExpensesOfDay().get(j).getValueOfExpense() +
@@ -191,17 +194,19 @@ public class User {
 
     public void printMonthIncome() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("What month?🗓");
-        Month month = findMonth(scanner.next());
+        System.out.println();
+        System.out.print("What month?🗓: ");
+        Month month = findMonth(scanner.next().toUpperCase());
+        System.out.println();
         for (int i = 0; i < month.getDays().size(); i++) {
             if (month.getDays().get(i).getIncomeOfDay().size() > 0) {
-                System.out.print(Color.CYAN_BOLD);
+                System.out.println(Color.CYAN_BOLD);
                 System.out.println("Day: " + (i + 1));
                 System.out.print(Color.RESET);
             }
             for (int j = 0; j < month.getDays().get(i).getIncomeOfDay().size(); j++) {
                 System.out.println(month.getDays().get(i).getIncomeOfDay().get(j).getNameOfIncomeSource() + " : " + month.getDays().get(i).getIncomeOfDay().get(j).getValueofIncome()
-                        + "💶 : ");
+                        + "💶");
                 if (month.getDays().get(i).getIncomeOfDay().get(j).isMonthlyIncome()) {
                     System.out.print("Monthly income🗓");
                 } else {
