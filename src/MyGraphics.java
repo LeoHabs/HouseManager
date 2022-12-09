@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class Graphics {
-    private ArrayList<String> balanceBar = new ArrayList<>();
+public class MyGraphics {
+    private static ArrayList<String> balanceBar = new ArrayList<>();
 
-    public void createBar(int expenseTotal, int incomeTotal) {
+    public static void updateBar(int expenseTotal, int incomeTotal) {
         int total = expenseTotal + incomeTotal;
         double expensePerTen = Math.round(((double) expenseTotal / total) * 20);
         double incomePerTen = Math.round(((double) incomeTotal / total) * 20);
@@ -19,11 +19,11 @@ public class Graphics {
         }
     }
 
-    public void printBar() {
+    public static void printBar() {
         balanceBar.forEach(System.out::print);
     }
 
-    public void printBalanceCalendar(Month month) {
+    public  static void printBalanceCalendar(Month month) {
         for (int i = 0; i < month.getDays().size(); i++) {
             if (i == 7 || i == 14 || i == 21 || i == 28) {
                 System.out.print(Color.BLUE_BOLD);
@@ -53,15 +53,15 @@ public class Graphics {
         System.out.print(Color.RESET);
     }
 
-    public boolean checkBalance(Day day) {
+    public static boolean checkBalance(Day day) {
         return day.getBalance() >= 0;
     }
 
-    public void positive(){
+    public static void positive(){
         System.out.print(Color.GREEN_BACKGROUND);
     }
 
-    public void negative(){
+    public static void negative(){
         System.out.print(Color.RED_BACKGROUND);
     }
 }

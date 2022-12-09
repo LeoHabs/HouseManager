@@ -7,7 +7,9 @@ public class Main {
         user.createNewMonth();
         user.createNewIncomeSource();
         user.createNewIncomeSource();
+        user.createNewExpense();
+        user.removeIncome();
         user.printMonthIncome();
-
+        MyGraphics.printBalanceCalendar(user.getMonthsInUse().get(0));
     }
 }
