@@ -18,6 +18,25 @@ public class Month {
         this.days = days;
     }
 
+
+    public static ArrayList<Month> createAllYear(){
+        ArrayList<Month> allYear= new ArrayList<>();
+        allYear.add(newMonth("JANUARY",31));
+        allYear.add(newMonth("FEBRUARY",28));
+        allYear.add(newMonth("MARCH",31));
+        allYear.add(newMonth("APRIL",30));
+        allYear.add(newMonth("MAY",31));
+        allYear.add(newMonth("JUNE",30));
+        allYear.add(newMonth("JULY",31));
+        allYear.add(newMonth("AUGUST",31));
+        allYear.add(newMonth("SEPTEMBER",30));
+        allYear.add(newMonth("OCTOBER",31));
+        allYear.add(newMonth("NOVEMBER",30));
+        allYear.add(newMonth("DECEMBER",31));
+
+        return allYear;
+    }
+
     public static Month newMonth(String monthName, int numberOfDays){
         ArrayList<Day> days = new ArrayList<>();
         for (int i = 0; i <numberOfDays; i++) {

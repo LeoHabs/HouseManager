@@ -13,7 +13,17 @@ public class UserOperations {
 
 
 
+    public static void createAllYear(){
+        if(currentUser.getMonthsInUse().size() > 0){
+            System.out.println(Color.BLUE_BOLD+ "To avoid conflict, it is only possible to create the all year if you have not created any month before!" + Color.RESET);
+            return;
+        }
+        currentUser.setMonthsInUse(Month.createAllYear());
+        System.out.println("Full year created with success!");
+    }
+
     public static void effortTaxAlarm() {
+        System.out.println();
         ArrayList<Month> monthsOverLimit = new ArrayList<>();
         for (int i = 0; i < currentUser.getMonthsInUse().size(); i++) {
             if (!safeEffortTax(currentUser.getMonthsInUse().get(i).getExpensesOfMonth(), currentUser.getMonthsInUse().get(i).getIncomeSourcesOfMonth()))
