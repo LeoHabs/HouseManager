@@ -1,3 +1,7 @@
+import Enums.Color;
+import TimeOrganization.Day;
+import TimeOrganization.Month;
+
 import java.util.ArrayList;
 
 public class MyGraphics {

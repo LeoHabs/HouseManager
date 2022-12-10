@@ -1,15 +1,19 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+import UserRelated.User;
+import UserRelated.UserManager;
+import UserRelated.UserOperations;
 
 public class Main {
     public static void main(String[] args) {
-        User user = new User();
-        user.createNewMonth();
-        user.createNewIncomeSource();
-        user.createNewIncomeSource();
-        user.createNewExpense();
-        user.removeIncome();
-        user.printMonthIncome();
-        MyGraphics.printBalanceCalendar(user.getMonthsInUse().get(0));
+        UserManager.createNewUser();
+        UserManager.createNewUser();
+        UserManager.loginProcedure();
+        UserOperations.createNewMonth();
+        UserOperations.createNewMonth();
+        UserOperations.createNewMonth();
+        UserOperations.createNewExpense();
+        UserOperations.autoFillAllMonthsExp();
+        UserOperations.printMonthExpenses();
+        UserOperations.printMonthExpenses();
+        UserOperations.printMonthExpenses();
     }
 }

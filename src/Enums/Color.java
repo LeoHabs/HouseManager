@@ -1,5 +1,7 @@
-enum Color {
-    //Color end string, color reset
+package Enums;
+
+public enum Color {
+    //Enums.Color end string, color reset
     RESET("\033[0m"),
 
     // Regular Colors. Normal color, no bold, background color etc.

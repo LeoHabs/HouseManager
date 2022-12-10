@@ -1,3 +1,5 @@
+import TimeOrganization.Month;
+
 public class Report {
 
     public void printReport(Month month){

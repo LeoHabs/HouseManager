@@ -1,3 +1,5 @@
+package Occurences;
+
 public class Expense {
     private String nameOfExpense;
     private double valueOfExpense;
@@ -21,7 +23,7 @@ public class Expense {
 
     public void pay(){
             this.paid = true;
-            System.out.println("Expense marked as paid ✅");
+            System.out.println("Occurences.Expense marked as paid ✅");
     }
 
     public String getNameOfExpense() {

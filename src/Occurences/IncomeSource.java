@@ -1,3 +1,5 @@
+package Occurences;
+
 public class IncomeSource {
     private String nameOfIncomeSource;
     private double valueofIncome;
