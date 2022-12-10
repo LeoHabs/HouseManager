@@ -1,14 +1,49 @@
 package UserRelated;
+
 import Enums.Color;
 import Occurences.Expense;
 import Occurences.IncomeSource;
 import TimeOrganization.Month;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserOperations{
+public class UserOperations {
     private static User currentUser = UserManager.getCurrentUser();
 
+
+
+    public static void effortTaxAlarm() {
+        ArrayList<Month> monthsOverLimit = new ArrayList<>();
+        for (int i = 0; i < currentUser.getMonthsInUse().size(); i++) {
+            if (!safeEffortTax(currentUser.getMonthsInUse().get(i).getExpensesOfMonth(), currentUser.getMonthsInUse().get(i).getIncomeSourcesOfMonth()))
+                monthsOverLimit.add(currentUser.getMonthsInUse().get(i));
+        }
+        if(monthsOverLimit.size() > 0) {
+            System.out.println(Color.RED_UNDERLINED + "The current months are over the effort tax defined!⚠️:" + Color.RESET);
+            for(Month month : monthsOverLimit){
+                System.out.println(Color.YELLOW_BOLD + month.getMonthName() +Color.RESET );
+            }
+        }
+    }
+
+    public static void defineEffortTax() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(Color.BLUE_BOLD + "TIP" + Color.RESET + Color.BLUE_UNDERLINED +
+                "We recommend you to aim for a effort tax below 40% at most!" + Color.RESET);
+        System.out.println();
+        while (true) {
+            try {
+                System.out.print("Effort tax objective🎯:");
+                currentUser.setEffortTax(scanner.nextDouble());
+                System.out.println("Tax defined with success!✅");
+                break;
+            } catch (Exception e) {
+                System.out.println("Unidentified value.Try again!");
+            }
+        }
+
+    }
 
     public static void createNewMonth() {
         System.out.println();
@@ -20,22 +55,17 @@ public class UserOperations{
         System.out.println("Month created with success🗄");
     }
 
-    public static void autoFillAllMonthsExp() {
-        for (int i = 0; i < currentUser.getExpenses().size() ; i++) {
-            if(currentUser.getExpenses().get(i).isMonthly()){
-                String name = currentUser.getExpenses().get(i).getNameOfExpense();
-                double value = currentUser.getExpenses().get(i).getValueOfExpense();
-                int day = currentUser.getExpenses().get(i).getDay();
-                for (int j = 0; j < currentUser.getMonthsInUse().size(); j++) {
-                    if(currentUser.getExpenses().get(i).getMonthsLeft() > 0) {
-                        currentUser.getMonthsInUse().get(i).getDays().get(day).addExpense(new Expense(name, value, true));
-                        currentUser.getExpenses().get(i).setMonthsLeft(currentUser.getExpenses().get(i).getMonthsLeft() - 1);
-                    }
-                }
+    public static void autoFillAllMonthsExp(Expense expense) {
+        int day = expense.getDay();
+        for (int i = 0; i < currentUser.getMonthsInUse().size() && expense.getMonthsLeft() > 0; i++) {
+            if (day > currentUser.getMonthsInUse().get(i).getDays().size()) {
+                continue;
             }
+            currentUser.getMonthsInUse().get(i).addExpensesOfMonth(expense);
+            currentUser.getMonthsInUse().get(i).getDays().get(day).addExpense(new Expense(expense.getNameOfExpense(), expense.getValueOfExpense(), expense.isMonthly()));
+            expense.setMonthsLeft(expense.getMonthsLeft() - 1);
         }
     }
-
 
     public static void removeExpense() {
         Scanner scanner = new Scanner(System.in);
@@ -88,6 +118,7 @@ public class UserOperations{
     }
 
     public static Month printMonthExpenses() {
+        boolean empty = true;
         Scanner scanner = new Scanner(System.in);
         System.out.println();
         System.out.print("What month?🗓: ");
@@ -95,6 +126,7 @@ public class UserOperations{
         System.out.println();
         for (int i = 0; i < month.getDays().size(); i++) {
             if (month.getDays().get(i).getExpensesOfDay().size() > 0) {
+                empty = false;
                 System.out.print(Color.CYAN_BOLD);
                 System.out.println("Day: " + (i + 1));
                 System.out.print(Color.RESET);
@@ -110,11 +142,14 @@ public class UserOperations{
                 System.out.println(Color.BLUE_BOLD + "------------------------" + Color.RESET);
             }
         }
+        if (empty) {
+            System.out.println("Nothing to show in " + month.getMonthName());
+        }
         System.out.println();
         return month;
     }
 
-    public static  Month printMonthIncome() {
+    public static Month printMonthIncome() {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
         System.out.print("What month?🗓: ");
@@ -187,6 +222,7 @@ public class UserOperations{
         System.out.print("Day of the month🗓: ");
         income.setDay(scanner.nextInt() - 1);
         month.getDays().get(income.getDay()).addIncome(income);
+        month.addIncomeSourcesOfMonth(income);
         currentUser.getIncomeSources().add(income);
         System.out.println("Income source added with success!🗄");
     }
@@ -232,14 +268,21 @@ public class UserOperations{
             }
             Month month = null;
 
-            while (month == null) {
-                System.out.print("Month🗓: ");
-                month = findMonth(scanner.next().toUpperCase());
+            if (!expense.isMonthly()) {
+                while (month == null) {
+                    System.out.print("Month🗓: ");
+                    month = findMonth(scanner.next().toUpperCase());
+                }
             }
             System.out.print("Day of the month🗓: ");
             int day = scanner.nextInt() - 1;
             expense.setDay(day);
-            month.getDays().get(day).addExpense(expense);
+            if (!expense.isMonthly()) {
+                month.addExpensesOfMonth(expense);
+                month.getDays().get(day).addExpense(expense);
+            } else {
+                autoFillAllMonthsExp(expense);
+            }
             currentUser.getExpenses().add(expense);
             break;
         }
@@ -257,5 +300,19 @@ public class UserOperations{
         return null;
     }
 
+    public static boolean safeEffortTax(ArrayList<Expense> expenses, ArrayList<IncomeSource> income) {
+        double expenseTotal = 0;
+        double incomeTotal = 0;
+        for (Expense expense : expenses) {
+            expenseTotal += expense.getValueOfExpense();
+        }
+        for (IncomeSource incomeSource : income) {
+            incomeTotal += incomeSource.getValueofIncome();
+        }
+        if ((expenseTotal / incomeTotal) * 100 >= currentUser.getEffortTax()) {
+            return false;
+        }
+        return true;
+    }
 
 }

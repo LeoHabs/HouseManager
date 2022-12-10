@@ -1,9 +1,16 @@
 package TimeOrganization;
 
+import Occurences.Expense;
+import Occurences.IncomeSource;
+
 import java.util.ArrayList;
 
 public class Month {
     private String monthName;
+
+    private ArrayList<Expense> expensesOfMonth = new ArrayList<>();
+
+    private ArrayList<IncomeSource> incomeSourcesOfMonth = new ArrayList<>();
     private ArrayList<Day> days = new ArrayList<>();
 
     public Month(String monthName, ArrayList<Day> days) {
@@ -57,5 +64,21 @@ public class Month {
 
     public void setDays(ArrayList<Day> days) {
         this.days = days;
+    }
+
+    public ArrayList<Expense> getExpensesOfMonth() {
+        return expensesOfMonth;
+    }
+
+    public void addExpensesOfMonth(Expense expenseOfMonth) {
+        this.expensesOfMonth.add(expenseOfMonth);
+    }
+
+    public ArrayList<IncomeSource> getIncomeSourcesOfMonth() {
+        return incomeSourcesOfMonth;
+    }
+
+    public void addIncomeSourcesOfMonth(IncomeSource incomeSource) {
+        this.incomeSourcesOfMonth.add(incomeSource);
     }
 }

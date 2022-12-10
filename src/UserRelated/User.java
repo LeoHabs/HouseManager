@@ -16,7 +16,7 @@ public class User {
     private double balance;
     private boolean loggedIn;
     private double expenseObjective;
-    private double effortTax;
+    private double effortTax = 0;
     private double effortTaxObjective;
     private ArrayList<Month> monthsInUse = new ArrayList<>();
     private ArrayList<Expense> expenses = new ArrayList<>();
