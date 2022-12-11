@@ -10,6 +10,7 @@ public class Main {
         UserOperations.createAllYear();
         UserOperations.createNewExpense();
         UserOperations.createNewExpense();
-        UserOperations.printExpensesByCategory();
+        UserOperations.createNewIncomeSource();
+        MyGraphics.printCalendarBelowObjective();
     }
 }

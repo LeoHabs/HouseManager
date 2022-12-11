@@ -22,6 +22,17 @@ public class Day {
       return incomeOfDay.stream().mapToDouble(e -> e.getValueofIncome()).sum() - expensesOfDay.stream().mapToDouble(e ->e.getValueOfExpense()).sum();
     }
 
+
+    public double sumOfIncome(){
+        if(incomeOfDay.size() == 0){
+            return 0;
+        }
+        return incomeOfDay.stream().mapToDouble(e ->e.getValueofIncome()).sum();
+    }
+    public double sumOfExpenses(){
+        return expensesOfDay.stream().mapToDouble(e ->e.getValueOfExpense()).sum();
+    }
+
     public int getDay() {
         return day;
     }

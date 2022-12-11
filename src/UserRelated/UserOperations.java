@@ -13,6 +13,12 @@ public class UserOperations {
     private static User currentUser = UserManager.getCurrentUser();
 
 
+
+    public static void setBalanceObjective() throws Exception{
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Objective 🎯: ");
+        currentUser.setBalanceObjective(scanner.nextDouble());
+    }
     public static void printExpensesByCategory(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Month🗓: ");

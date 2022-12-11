@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Month {
     private String monthName;
 
+
     private ArrayList<Expense> expensesOfMonth = new ArrayList<>();
 
     private ArrayList<IncomeSource> incomeSourcesOfMonth = new ArrayList<>();
@@ -67,7 +68,6 @@ public class Month {
                 return 0;
         }
     }
-
 
     public String getMonthName() {
         return monthName;

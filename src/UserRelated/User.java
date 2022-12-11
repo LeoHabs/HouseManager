@@ -1,5 +1,4 @@
 package UserRelated;
-import Enums.Color;
 import Occurences.Expense;
 import Occurences.IncomeSource;
 import TimeOrganization.*;
@@ -15,7 +14,7 @@ public class User {
     private String password;
     private double balance;
     private boolean loggedIn;
-    private double expenseObjective;
+    private double balanceObjective;
     private double effortTax = 0;
     private double effortTaxObjective;
     private ArrayList<Month> monthsInUse = new ArrayList<>();
@@ -76,12 +75,12 @@ public class User {
         this.loggedIn = loggedIn;
     }
 
-    public double getExpenseObjective() {
-        return expenseObjective;
+    public double getBalanceObjective() {
+        return balanceObjective;
     }
 
-    public void setExpenseObjective(double expenseObjective) {
-        this.expenseObjective = expenseObjective;
+    public void setBalanceObjective(double balanceObjective) {
+        this.balanceObjective = balanceObjective;
     }
 
     public double getEffortTax() {
