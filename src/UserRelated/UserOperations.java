@@ -1,6 +1,7 @@
 package UserRelated;
 
 import Enums.Color;
+import Enums.ExpenseCategories;
 import Occurences.Expense;
 import Occurences.IncomeSource;
 import TimeOrganization.Month;
@@ -12,6 +13,23 @@ public class UserOperations {
     private static User currentUser = UserManager.getCurrentUser();
 
 
+    public static void printExpensesByCategory(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Month🗓: ");
+        Month month = findMonth(scanner.next().toUpperCase());
+        if(month==null){
+            System.out.println("Month was not found");
+            return;
+        }
+        for (int i = 0; i <ExpenseCategories.values().length; i++) {
+            System.out.println(Color.GREEN_BOLD_BRIGHT + ExpenseCategories.values()[i].name() +" : "+ Color.RESET);
+            int finalI = i;
+            month.getExpensesOfMonth()
+                    .stream()
+                    .filter(e-> e.getCategoryOfExpense().name().equals(ExpenseCategories.values()[finalI].name()))
+                    .forEach(e-> System.out.println(e.getNameOfExpense() +" - " +e.getValueOfExpense() +" 💶"));
+        }
+    }
 
     public static void createAllYear(){
         if(currentUser.getMonthsInUse().size() > 0){
@@ -191,7 +209,6 @@ public class UserOperations {
         return month;
     }
 
-
     public static void createNewIncomeSource() {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
@@ -282,6 +299,12 @@ public class UserOperations {
                 while (month == null) {
                     System.out.print("Month🗓: ");
                     month = findMonth(scanner.next().toUpperCase());
+                    if(month == null) {
+                        System.out.print("Go back? (Y/N): ");
+                        if (scanner.next().equalsIgnoreCase("Y")) {
+                            return;
+                        }
+                    }
                 }
             }
             System.out.print("Day of the month🗓: ");
@@ -293,6 +316,11 @@ public class UserOperations {
             } else {
                 autoFillAllMonthsExp(expense);
             }
+            System.out.println("Choose a category 🏷: ");
+            ExpenseCategories.printCategories();
+            System.out.println();
+            System.out.print("Category 🏷: ");
+            expense.setCategoryOfExpense(ExpenseCategories.values()[scanner.nextInt()-1]);
             currentUser.getExpenses().add(expense);
             break;
         }
@@ -306,7 +334,7 @@ public class UserOperations {
                 return currentUser.getMonthsInUse().get(i);
             }
         }
-        System.out.println("TimeOrganization.Month needs to be created first!");
+        System.out.println("Month needs to be created first!");
         return null;
     }
 
@@ -325,4 +353,19 @@ public class UserOperations {
         return true;
     }
 
+    public static double sumMonthExpenses(Month month){
+        double sum =0;
+        for (int i = 0; i <month.getExpensesOfMonth().size() ; i++) {
+           sum+= month.getExpensesOfMonth().get(i).getValueOfExpense();
+        }
+        return sum;
+    }
+
+    public static double sumMonthIncome(Month month){
+        double sum = 0;
+        for (int i = 0; i <month.getExpensesOfMonth().size(); i++) {
+            sum+= month.getExpensesOfMonth().get(i).getValueOfExpense();
+        }
+        return sum;
+    }
 }

@@ -1,9 +1,9 @@
 package Enums;
 
 public enum ExpenseTypeRule50 {
-    Want,
-    Need,
-    Save;
+    Wants,
+    Needs,
+    Saves;
 
-
+    // Assign each category to one of this categories automatically
 }
