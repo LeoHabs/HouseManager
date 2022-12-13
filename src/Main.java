@@ -1,16 +1,10 @@
-import Enums.ExpenseCategories;
-import UserRelated.User;
+import MyGraphics.MyGraphics;
+import Program.HomeManager;
 import UserRelated.UserManager;
 import UserRelated.UserOperations;
 
 public class Main {
     public static void main(String[] args) {
-        UserManager.createNewUser();
-        UserManager.loginProcedure();
-        UserOperations.createAllYear();
-        UserOperations.createNewExpense();
-        UserOperations.createNewExpense();
-        UserOperations.createNewIncomeSource();
-        MyGraphics.printCalendarBelowObjective();
+        HomeManager.programRunning();
     }
 }

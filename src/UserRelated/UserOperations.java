@@ -13,11 +13,38 @@ public class UserOperations {
     private static User currentUser = UserManager.getCurrentUser();
 
 
-
-    public static void setBalanceObjective() throws Exception{
+    public static void payExpense(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println();
+        Month month = printMonthExpenses();
+        System.out.println();
+        int day = 0;
+        int expenseIndex = 0;
+        while (true) {
+            try {
+                System.out.println("Day 📅: ");
+                day = scanner.nextInt() - 1;
+                System.out.println("Expense number🗃");
+                expenseIndex = scanner.nextInt() - 1;
+                break;
+            } catch (Exception e) {
+                System.out.println("Unidentified value.Try again!");
+            }
+        }
+        try {
+            month.getDays().get(day).getExpensesOfDay().get(expenseIndex).setPaid(true);
+        } catch (Exception e) {
+            System.out.println("No expense found.");
+        }
+    }
+    public static void defineBalanceObjective(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Objective 🎯: ");
-        currentUser.setBalanceObjective(scanner.nextDouble());
+        try {
+            currentUser.setExpenseObjective(scanner.nextDouble());
+        }catch (Exception e){
+            System.out.println("Unidentified value.Try again!");
+        }
     }
     public static void printExpensesByCategory(){
         Scanner scanner = new Scanner(System.in);
@@ -54,7 +81,7 @@ public class UserOperations {
                 monthsOverLimit.add(currentUser.getMonthsInUse().get(i));
         }
         if(monthsOverLimit.size() > 0) {
-            System.out.println(Color.RED_UNDERLINED + "The current months are over the effort tax defined!⚠️:" + Color.RESET);
+            System.out.println(Color.RED_UNDERLINED + "⚠️The current months are over the effort tax defined!⚠️:" + Color.RESET);
             for(Month month : monthsOverLimit){
                 System.out.println(Color.YELLOW_BOLD + month.getMonthName() +Color.RESET );
             }
@@ -110,9 +137,9 @@ public class UserOperations {
         int expenseIndex = 0;
         while (true) {
             try {
-                System.out.println("TimeOrganization.Day 📅: ");
+                System.out.println("Day 📅: ");
                 day = scanner.nextInt() - 1;
-                System.out.println("Occurences.Expense number🗃");
+                System.out.println("Expense number🗃");
                 expenseIndex = scanner.nextInt() - 1;
                 break;
             } catch (Exception e) {
@@ -135,7 +162,7 @@ public class UserOperations {
         int incomeIndex = 0;
         while (true) {
             try {
-                System.out.print("TimeOrganization.Day 📅: ");
+                System.out.print("Day 📅: ");
                 day = scanner.nextInt() - 1;
                 System.out.print("Income number🗃");
                 incomeIndex = scanner.nextInt() - 1;

@@ -1,6 +1,7 @@
 package UserRelated;
 
 import Enums.Color;
+import Program.Menus;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ public class UserManager {
     private static ArrayList<User> allUsers = new ArrayList<>();
 
 
-    public static void loginProcedure() {
+    public static boolean loginProcedure(){
         System.out.println();
         System.out.println(Color.BLUE_BOLD + "LOGIN" + Color.RESET);
         Scanner scanner = new Scanner(System.in);
@@ -18,16 +19,17 @@ public class UserManager {
         User user = null;
         user = findUser(scanner.next());
         if (user == null) {
-            return;
+            return false;
         }
         if (user.logIn()) {
             currentUser = user;
             user.setLoggedIn(true);
             System.out.println("Welcome " + user.getFirstName());
+            return true;
         } else {
             System.out.println(Color.RED_UNDERLINED + "Username or password is wrong");
+            return false;
         }
-
     }
 
     //Redirecionará para o menu inicial
@@ -35,6 +37,7 @@ public class UserManager {
         System.out.println("Until next time!✋");
         currentUser.setLoggedIn(false);
         currentUser = null;
+        Menus.initialMenu();
     }
 
     public static void createNewUser() {

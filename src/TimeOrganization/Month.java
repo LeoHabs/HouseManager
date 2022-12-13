@@ -20,6 +20,9 @@ public class Month {
     }
 
 
+    public double sumExpenses(){
+       return expensesOfMonth.stream().mapToDouble(n-> n.getValueOfExpense()).sum();
+    }
     public static ArrayList<Month> createAllYear(){
         ArrayList<Month> allYear= new ArrayList<>();
         allYear.add(newMonth("JANUARY",31));

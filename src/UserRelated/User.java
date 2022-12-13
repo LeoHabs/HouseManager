@@ -14,7 +14,7 @@ public class User {
     private String password;
     private double balance;
     private boolean loggedIn;
-    private double balanceObjective;
+    private double expenseObjective = 0;
     private double effortTax = 0;
     private double effortTaxObjective;
     private ArrayList<Month> monthsInUse = new ArrayList<>();
@@ -75,12 +75,12 @@ public class User {
         this.loggedIn = loggedIn;
     }
 
-    public double getBalanceObjective() {
-        return balanceObjective;
+    public double getExpenseObjective() {
+        return expenseObjective;
     }
 
-    public void setBalanceObjective(double balanceObjective) {
-        this.balanceObjective = balanceObjective;
+    public void setExpenseObjective(double expenseObjective) {
+        this.expenseObjective = expenseObjective;
     }
 
     public double getEffortTax() {

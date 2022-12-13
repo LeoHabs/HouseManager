@@ -1,6 +1,9 @@
+package MyGraphics;
+
 import Enums.Color;
 import TimeOrganization.Day;
 import TimeOrganization.Month;
+import UserRelated.User;
 import UserRelated.UserOperations;
 
 import java.util.ArrayList;
@@ -9,10 +12,18 @@ import java.util.Scanner;
 public class MyGraphics {
     private static ArrayList<String> balanceBar = new ArrayList<>();
 
-    public static void updateBar(int expenseTotal, int incomeTotal) {
-        int total = expenseTotal + incomeTotal;
-        double expensePerTen = Math.round(((double) expenseTotal / total) * 20);
-        double incomePerTen = Math.round(((double) incomeTotal / total) * 20);
+    public static void updateBar() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("What month?🗓: ");
+        Month month = UserOperations.findMonth(scanner.next().toUpperCase());
+        if (month == null){
+            return;
+        }
+        double expenseTotal = UserOperations.sumMonthExpenses(month);
+        double incomeTotal = UserOperations.sumMonthIncome(month);
+        double total = expenseTotal + incomeTotal;
+        double expensePerTen = Math.round(( expenseTotal / total) * 20);
+        double incomePerTen = Math.round(( incomeTotal / total) * 20);
 
         for (int i = 0; i < expensePerTen; i++) {
             String singlebar = Color.RED_BOLD_BRIGHT + "◼" + Color.RESET;
@@ -58,7 +69,6 @@ public class MyGraphics {
         System.out.print("|");
         System.out.print(Color.RESET);
     }
-
     public static void printCalendarBelowObjective() {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
@@ -69,7 +79,7 @@ public class MyGraphics {
         System.out.println(Color.BLUE_BOLD + "Green means the balance is positive on green days and red negative on red days");
         System.out.println("TIP: Try to organize expenses for after the days you get green or altering the income to the start of red periods" + Color.RESET);
         System.out.println();
-        System.out.println(Color.BLUE_BOLD+month.getMonthName()+": "+Color.RESET);
+        System.out.println(Color.BLUE_BOLD + month.getMonthName() + ": " + Color.RESET);
         for (int i = 0; i < month.getDays().size(); i++) {
             initialBalance += month.getDays().get(i).sumOfIncome();
             initialBalance -= month.getDays().get(i).sumOfExpenses();
@@ -98,7 +108,6 @@ public class MyGraphics {
         }
     }
 
-
     public static boolean checkBalance(Day day) {
         return day.getBalance() >= 0;
     }
@@ -109,5 +118,16 @@ public class MyGraphics {
 
     public static void negative() {
         System.out.print(Color.RED_BACKGROUND);
+    }
+
+    public static void printMonthsBelowObjective(User user){
+        System.out.println();
+        System.out.println(Color.RED_UNDERLINED + "⚠️This months are below the expense total objective set by you!⚠️:" + Color.RESET);
+        for (int i = 0; i < user.getMonthsInUse().size(); i++) {
+            if(user.getMonthsInUse().get(i).sumExpenses() > user.getExpenseObjective()){
+                System.out.println(Color.RED_BOLD_BRIGHT + user.getMonthsInUse().get(i).getMonthName() + Color.RESET);
+            }
+
+        }
     }
 }
