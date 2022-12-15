@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HouseManager:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/HouseManager_jar</output-path>
+    <root id="archive" name="HouseManager.jar">
+      <element id="module-output" name="HouseManager" />
+    </root>
+  </artifact>
+</component>

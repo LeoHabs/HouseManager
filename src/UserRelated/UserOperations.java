@@ -2,6 +2,7 @@ package UserRelated;
 
 import Enums.Color;
 import Enums.ExpenseCategories;
+import Enums.ExpenseTypeRule50;
 import Occurences.Expense;
 import Occurences.IncomeSource;
 import TimeOrganization.Month;
@@ -13,7 +14,7 @@ public class UserOperations {
     private static User currentUser = UserManager.getCurrentUser();
 
 
-    public static void payExpense(){
+    public static void payExpense() {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
         Month month = printMonthExpenses();
@@ -37,36 +38,38 @@ public class UserOperations {
             System.out.println("No expense found.");
         }
     }
-    public static void defineBalanceObjective(){
+
+    public static void defineBalanceObjective() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Objective 🎯: ");
         try {
             currentUser.setExpenseObjective(scanner.nextDouble());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Unidentified value.Try again!");
         }
     }
-    public static void printExpensesByCategory(){
+
+    public static void printExpensesByCategory() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Month🗓: ");
         Month month = findMonth(scanner.next().toUpperCase());
-        if(month==null){
+        if (month == null) {
             System.out.println("Month was not found");
             return;
         }
-        for (int i = 0; i <ExpenseCategories.values().length; i++) {
-            System.out.println(Color.GREEN_BOLD_BRIGHT + ExpenseCategories.values()[i].name() +" : "+ Color.RESET);
+        for (int i = 0; i < ExpenseCategories.values().length; i++) {
+            System.out.println(Color.GREEN_BOLD_BRIGHT + ExpenseCategories.values()[i].name() + " : " + Color.RESET);
             int finalI = i;
             month.getExpensesOfMonth()
                     .stream()
-                    .filter(e-> e.getCategoryOfExpense().name().equals(ExpenseCategories.values()[finalI].name()))
-                    .forEach(e-> System.out.println(e.getNameOfExpense() +" - " +e.getValueOfExpense() +" 💶"));
+                    .filter(e -> e.getCategoryOfExpense().name().equals(ExpenseCategories.values()[finalI].name()))
+                    .forEach(e -> System.out.println(e.getNameOfExpense() + " - " + e.getValueOfExpense() + " 💶"));
         }
     }
 
-    public static void createAllYear(){
-        if(currentUser.getMonthsInUse().size() > 0){
-            System.out.println(Color.BLUE_BOLD+ "To avoid conflict, it is only possible to create the all year if you have not created any month before!" + Color.RESET);
+    public static void createAllYear() {
+        if (currentUser.getMonthsInUse().size() > 0) {
+            System.out.println(Color.BLUE_BOLD + "To avoid conflict, it is only possible to create the all year if you have not created any month before!" + Color.RESET);
             return;
         }
         currentUser.setMonthsInUse(Month.createAllYear());
@@ -80,10 +83,10 @@ public class UserOperations {
             if (!safeEffortTax(currentUser.getMonthsInUse().get(i).getExpensesOfMonth(), currentUser.getMonthsInUse().get(i).getIncomeSourcesOfMonth()))
                 monthsOverLimit.add(currentUser.getMonthsInUse().get(i));
         }
-        if(monthsOverLimit.size() > 0) {
+        if (monthsOverLimit.size() > 0) {
             System.out.println(Color.RED_UNDERLINED + "⚠️The current months are over the effort tax defined!⚠️:" + Color.RESET);
-            for(Month month : monthsOverLimit){
-                System.out.println(Color.YELLOW_BOLD + month.getMonthName() +Color.RESET );
+            for (Month month : monthsOverLimit) {
+                System.out.println(Color.YELLOW_BOLD + month.getMonthName() + Color.RESET);
             }
         }
     }
@@ -278,7 +281,14 @@ public class UserOperations {
         while (month == null) {
             System.out.print("Month🗓: ");
             month = findMonth(scanner.next().toUpperCase());
+            if (month == null) {
+                System.out.print("Go back? (Y/N): ");
+                if (scanner.next().equalsIgnoreCase("Y")) {
+                    return;
+                }
+            }
         }
+
         System.out.print("Day of the month🗓: ");
         income.setDay(scanner.nextInt() - 1);
         month.getDays().get(income.getDay()).addIncome(income);
@@ -315,6 +325,7 @@ public class UserOperations {
                 while (true) {
                     try {
                         System.out.print("How many months?🗓: ");
+                        scanner.nextLine();
                         expense.setMonthsLeft(scanner.nextInt());
                         break;
                     } catch (Exception e) {
@@ -332,7 +343,7 @@ public class UserOperations {
                 while (month == null) {
                     System.out.print("Month🗓: ");
                     month = findMonth(scanner.next().toUpperCase());
-                    if(month == null) {
+                    if (month == null) {
                         System.out.print("Go back? (Y/N): ");
                         if (scanner.next().equalsIgnoreCase("Y")) {
                             return;
@@ -353,8 +364,14 @@ public class UserOperations {
             ExpenseCategories.printCategories();
             System.out.println();
             System.out.print("Category 🏷: ");
-            expense.setCategoryOfExpense(ExpenseCategories.values()[scanner.nextInt()-1]);
-            currentUser.getExpenses().add(expense);
+            int categoryIndex = scanner.nextInt() - 1;
+            expense.setCategoryOfExpense(ExpenseCategories.values()[categoryIndex]);
+            if (categoryIndex < 6) {
+                expense.setCategoryOfRule(ExpenseTypeRule50.values()[1]);
+            }
+            if (categoryIndex > 6) {
+                expense.setCategoryOfRule(ExpenseTypeRule50.values()[0]);
+            }
             break;
         }
         System.out.println("Expense created with success!🗄");
@@ -386,18 +403,18 @@ public class UserOperations {
         return true;
     }
 
-    public static double sumMonthExpenses(Month month){
-        double sum =0;
-        for (int i = 0; i <month.getExpensesOfMonth().size() ; i++) {
-           sum+= month.getExpensesOfMonth().get(i).getValueOfExpense();
+    public static double sumMonthExpenses(Month month) {
+        double sum = 0;
+        for (int i = 0; i < month.getExpensesOfMonth().size(); i++) {
+            sum += month.getExpensesOfMonth().get(i).getValueOfExpense();
         }
         return sum;
     }
 
-    public static double sumMonthIncome(Month month){
+    public static double sumMonthIncome(Month month) {
         double sum = 0;
-        for (int i = 0; i <month.getExpensesOfMonth().size(); i++) {
-            sum+= month.getExpensesOfMonth().get(i).getValueOfExpense();
+        for (int i = 0; i < month.getExpensesOfMonth().size(); i++) {
+            sum += month.getExpensesOfMonth().get(i).getValueOfExpense();
         }
         return sum;
     }

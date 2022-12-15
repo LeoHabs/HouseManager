@@ -19,7 +19,9 @@ public class Month {
         this.days = days;
     }
 
-
+    public double sumIncome(){
+        return incomeSourcesOfMonth.stream().mapToDouble(n -> n.getValueofIncome()).sum();
+    }
     public double sumExpenses(){
        return expensesOfMonth.stream().mapToDouble(n-> n.getValueOfExpense()).sum();
     }

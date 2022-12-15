@@ -122,7 +122,7 @@ public class MyGraphics {
 
     public static void printMonthsBelowObjective(User user){
         System.out.println();
-        System.out.println(Color.RED_UNDERLINED + "⚠️This months are below the expense total objective set by you!⚠️:" + Color.RESET);
+        System.out.println(Color.RED_UNDERLINED + "⚠️This months are above the expense total objective set by you!⚠️:" + Color.RESET);
         for (int i = 0; i < user.getMonthsInUse().size(); i++) {
             if(user.getMonthsInUse().get(i).sumExpenses() > user.getExpenseObjective()){
                 System.out.println(Color.RED_BOLD_BRIGHT + user.getMonthsInUse().get(i).getMonthName() + Color.RESET);

@@ -1,6 +1,7 @@
 package Occurences;
 
 import Enums.ExpenseCategories;
+import Enums.ExpenseTypeRule50;
 
 public class Expense {
     private String nameOfExpense;
@@ -15,6 +16,8 @@ public class Expense {
     private int day;
 
     private ExpenseCategories categoryOfExpense;
+
+    private ExpenseTypeRule50 rule50Category;
 
     public Expense(String nameOfExpense, double valueOfExpense, boolean monthly) {
         this.nameOfExpense = nameOfExpense;
@@ -84,5 +87,13 @@ public class Expense {
 
     public void setCategoryOfExpense(ExpenseCategories categoryOfExpense) {
         this.categoryOfExpense = categoryOfExpense;
+    }
+
+    public ExpenseTypeRule50 getRule50Category() {
+        return rule50Category;
+    }
+
+    public void setCategoryOfRule(ExpenseTypeRule50 category){
+        this.rule50Category = category;
     }
 }

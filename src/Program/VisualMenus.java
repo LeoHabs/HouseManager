@@ -64,8 +64,9 @@ public class VisualMenus {
         System.out.println("|1- 📆 Calendar with expense days");
         System.out.println("|2- 📆 Calendar with month balance simulation");
         System.out.println("|3- 📊 Bar to compare income and expenses in a month");
-        System.out.println("|4- 🗃 Months below expense objective");
-        System.out.println("|5- 🔙 Exit");
+        System.out.println("|4- 🗃 Months above expense objective");
+        System.out.println("|5- 🗂 50/40/30 Rule Simulation");
+        System.out.println("|6- 🔙 Exit");
     }
 
     public static void userInfo() {
