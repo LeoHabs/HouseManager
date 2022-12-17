@@ -45,6 +45,7 @@ public class Menus {
         clearScreen();
         System.out.println();
         Scanner scanner = new Scanner(System.in);
+        UserOperations.monthsCreatedCheck();
         VisualMenus.mainMenu();
         System.out.print(Color.GREEN_BOLD + "Option:" + Color.RESET);
         switch (scanner.next()) {
@@ -212,6 +213,7 @@ public class Menus {
             case "3":
                 clearScreen();
                 MyGraphics.updateBar();
+                MyGraphics.printBar();
                 dataAnalysis();
                 break;
             case "4":

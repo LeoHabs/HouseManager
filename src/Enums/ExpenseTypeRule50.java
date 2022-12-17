@@ -20,7 +20,7 @@ public enum ExpenseTypeRule50 {
         Month month = UserOperations.findMonth(scanner.next().toUpperCase());
         System.out.println("You have a total of " + month.sumIncome() + " 💶 to spend in " + month.getMonthName());
         System.out.println();
-        System.out.print("Amount to had to the simulation" + Color.BLUE_UNDERLINED + " (This simulates the money you count to have at the start of this month) : " + Color.RESET);
+        System.out.print("Amount to had to the simulation" + Color.BLUE_UNDERLINED + " (This simulates the money you count to have at the start of this month) :" + Color.RESET +" ");
         double totalIncome = month.sumIncome() - scanner.nextInt();
         double wantsValue = Math.round(month.getExpensesOfMonth().stream()
                 .filter(e -> e.getRule50Category().name().equals("Wants"))

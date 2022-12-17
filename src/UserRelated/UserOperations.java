@@ -14,6 +14,12 @@ public class UserOperations {
     private static User currentUser = UserManager.getCurrentUser();
 
 
+    public static void monthsCreatedCheck(){
+        if(currentUser.getMonthsInUse().size() == 0){
+            System.out.println(Color.BLUE_BOLD + "DON'T FORGET TO CREATE YOUR CALENDAR FIRST" + Color. RESET);
+        }
+    }
+
     public static void payExpense() {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
@@ -196,8 +202,7 @@ public class UserOperations {
                 System.out.print(Color.RESET);
             }
             for (int j = 0; j < month.getDays().get(i).getExpensesOfDay().size(); j++) {
-                System.out.println((j + 1) + ": " + month.getDays().get(i).getExpensesOfDay().get(j).getNameOfExpense() + " : " + month.getDays().get(i).getExpensesOfDay().get(j).getValueOfExpense() +
-                        "💶  Months left: " + month.getDays().get(i).getExpensesOfDay().get(j).getMonthsLeft());
+                System.out.println((j + 1) + ": " + month.getDays().get(i).getExpensesOfDay().get(j).getNameOfExpense() + " : " + month.getDays().get(i).getExpensesOfDay().get(j).getValueOfExpense() + "💶");
                 if (month.getDays().get(i).getExpensesOfDay().get(j).isPaid()) {
                     System.out.println(" Paid✅");
                 } else {
@@ -290,7 +295,12 @@ public class UserOperations {
         }
 
         System.out.print("Day of the month🗓: ");
-        income.setDay(scanner.nextInt() - 1);
+        try {
+            income.setDay(scanner.nextInt() - 1);
+        } catch (Exception e){
+            System.out.println("Unidentified value");
+            return;
+        }
         month.getDays().get(income.getDay()).addIncome(income);
         month.addIncomeSourcesOfMonth(income);
         currentUser.getIncomeSources().add(income);
@@ -352,7 +362,13 @@ public class UserOperations {
                 }
             }
             System.out.print("Day of the month🗓: ");
-            int day = scanner.nextInt() - 1;
+            int day = 0;
+            try {
+                day = scanner.nextInt() - 1;
+            }catch (Exception e){
+                System.out.println("Unidentified value!");
+                return;
+            }
             expense.setDay(day);
             if (!expense.isMonthly()) {
                 month.addExpensesOfMonth(expense);
@@ -364,7 +380,14 @@ public class UserOperations {
             ExpenseCategories.printCategories();
             System.out.println();
             System.out.print("Category 🏷: ");
-            int categoryIndex = scanner.nextInt() - 1;
+            int categoryIndex = 0;
+            try{
+                categoryIndex = scanner.nextInt() - 1;
+            } catch (Exception e){
+                System.out.println("Unidentified value!");
+                return;
+            }
+
             expense.setCategoryOfExpense(ExpenseCategories.values()[categoryIndex]);
             if (categoryIndex < 6) {
                 expense.setCategoryOfRule(ExpenseTypeRule50.values()[1]);
