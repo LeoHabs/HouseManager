@@ -2,7 +2,6 @@ package Enums;
 
 import Occurences.Expense;
 import TimeOrganization.Month;
-import UserRelated.UserManager;
 import UserRelated.UserOperations;
 
 import java.util.Scanner;

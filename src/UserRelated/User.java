@@ -1,7 +1,9 @@
 package UserRelated;
+
 import Occurences.Expense;
 import Occurences.IncomeSource;
 import TimeOrganization.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -97,9 +99,6 @@ public class User {
         return effortTaxObjective;
     }
 
-    public void setEffortTaxObjective(double effortTaxObjective) {
-        this.effortTaxObjective = effortTaxObjective;
-    }
 
     public ArrayList<Month> getMonthsInUse() {
         return monthsInUse;
@@ -109,35 +108,12 @@ public class User {
         this.monthsInUse = monthsInUse;
     }
 
-    public ArrayList<Expense> getExpenses() {
-        return expenses;
-    }
-
-    public void setExpenses(ArrayList<Expense> expenses) {
-        this.expenses = expenses;
-    }
-
     public ArrayList<IncomeSource> getIncomeSources() {
         return incomeSources;
-    }
-
-    public void setIncomeSources(ArrayList<IncomeSource> incomeSources) {
-        this.incomeSources = incomeSources;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

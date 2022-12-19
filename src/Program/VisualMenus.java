@@ -21,7 +21,7 @@ public class VisualMenus {
         System.out.println("|3- 🎯 Define objectives");
         System.out.println("|4- 📊 Data analysis");
         System.out.println("|5- 📓 My Profile");
-        System.out.println("|5- ✋ Logout");
+        System.out.println("|6- ✋ Logout");
         System.out.println();
         UserOperations.effortTaxAlarm();
     }

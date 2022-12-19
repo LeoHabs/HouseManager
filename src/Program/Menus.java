@@ -3,7 +3,6 @@ package Program;
 import Enums.Color;
 import Enums.ExpenseTypeRule50;
 import MyGraphics.MyGraphics;
-import UserRelated.User;
 import UserRelated.UserManager;
 import UserRelated.UserOperations;
 

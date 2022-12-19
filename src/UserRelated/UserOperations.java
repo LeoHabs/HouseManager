@@ -141,6 +141,10 @@ public class UserOperations {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
         Month month = printMonthExpenses();
+        if (month == null){
+            System.out.println("Month not found");
+            return;
+        }
         System.out.println();
         int day = 0;
         int expenseIndex = 0;
@@ -194,6 +198,9 @@ public class UserOperations {
         System.out.print("What month?🗓: ");
         Month month = findMonth(scanner.next().toUpperCase());
         System.out.println();
+        if(month == null){
+            return null;
+        }
         for (int i = 0; i < month.getDays().size(); i++) {
             if (month.getDays().get(i).getExpensesOfDay().size() > 0) {
                 empty = false;
@@ -436,8 +443,8 @@ public class UserOperations {
 
     public static double sumMonthIncome(Month month) {
         double sum = 0;
-        for (int i = 0; i < month.getExpensesOfMonth().size(); i++) {
-            sum += month.getExpensesOfMonth().get(i).getValueOfExpense();
+        for (int i = 0; i < month.getIncomeSourcesOfMonth().size(); i++) {
+            sum += month.getIncomeSourcesOfMonth().get(i).getValueofIncome();
         }
         return sum;
     }

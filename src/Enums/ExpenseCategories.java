@@ -1,9 +1,5 @@
 package Enums;
 
-import Occurences.Expense;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public enum ExpenseCategories {
     Health("Health"),
